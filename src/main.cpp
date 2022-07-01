@@ -16,7 +16,6 @@ void MainServer::handleResponse()
 	std::cout << buffer << std::endl;
 }
 
-// TODO: Convert newlines and tabs into respective escape sequences
 const char* readFile(const char* fileName)
 {
 	std::ifstream file(fileName);
@@ -36,7 +35,7 @@ void MainServer::respondData()
 
 void MainServer::launch()
 {
-	std::cout << "Starting on port " << (int)getSocketAddress()->getServerAddress().sin_port << "... Press Ctrl+C to stop." << std::endl;
+	std::cout << "Starting on port " << ntohs(getSocketAddress()->getServerAddress().sin_port) << "... Press Ctrl+C to stop." << std::endl;
 
 	while (true)
 	{
