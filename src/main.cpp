@@ -16,26 +16,35 @@ void MainServer::handleResponse()
 	std::cout << buffer << std::endl;
 }
 
-const char* readFile(const char* fileName)
+const char* MainServer::readFile()
 {
-	std::ifstream file(fileName);
-	static std::string contents = "";
+	if (strcmp(filePath, "") == 0)
+	{
+		std::cerr << "No file path specified!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 
-	while (getline(file, contents)) continue;
+	std::ifstream file(filePath);
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+
+	const std::string& temp = buffer.str();
+	buffer.seekp(0);
+	buffer << "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n" << temp;
+
+	static std::string contents = buffer.str();
 	return contents.c_str();
 }
 
 void MainServer::respondData()
 {
-	char* response = (char*)readFile(filePath);
-
+	const char* response = readFile();
 	write(newSocket, response, strlen(response));
-	close(newSocket);
 }
 
 void MainServer::launch()
 {
-	std::cout << "Starting on port " << ntohs(getSocketAddress()->getServerAddress().sin_port) << "... Press Ctrl+C to stop." << std::endl;
+	std::cout << "Starting on \033[1;4mlocalhost:" << ntohs(getSocketAddress()->getServerAddress().sin_port) << "\033[0m... Press Ctrl+C to stop." << std::endl;
 
 	while (true)
 	{
@@ -44,6 +53,6 @@ void MainServer::launch()
 		handleResponse();
 		respondData();
 		close(newSocket);
-		std::cout << "========== Done ==========" << std::endl;
+		std::cout << "========== Done =============" << std::endl;
 	}
 }

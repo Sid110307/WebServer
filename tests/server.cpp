@@ -7,7 +7,7 @@ int main()
 
 	sigIntHandler.sa_handler = [](int signalCode)
 	{
-		std::cout << "\rStopping..." << std::endl;
+		std::cout << "========== Stopped ==========" << std::endl;
 		exit(signalCode);
 	};
 
