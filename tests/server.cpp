@@ -1,8 +1,14 @@
 #include <signal.h>
 #include "../src/include/main.h"
 
-int main()
+int main(int argc, const char** argv)
 {
+    if (argc < 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <port>" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
 	struct sigaction sigIntHandler;
 
 	sigIntHandler.sa_handler = [](int signalCode)
@@ -16,7 +22,7 @@ int main()
 
 	sigaction(SIGINT, &sigIntHandler, NULL);
 
-	MainServer server;
+	MainServer server(atoi(argv[1]));
 	server.filePath = "./tests/index.html";
 	server.launch();
 }

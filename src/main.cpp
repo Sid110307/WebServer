@@ -1,6 +1,6 @@
 #include "./include/main.h"
 
-MainServer::MainServer() : Server(AF_INET, SOCK_STREAM, 0, 420, INADDR_ANY, 10) {}
+MainServer::MainServer(int portName) : Server(AF_INET, SOCK_STREAM, 0, portName, INADDR_ANY, 10) {}
 
 void MainServer::acceptRequest()
 {

@@ -8,7 +8,7 @@
 class MainServer : public Server
 {
 public:
-	MainServer();
+	MainServer(int portName);
 	void launch();
 
 	const char* filePath;
