@@ -1,4 +1,4 @@
 # Web Server
 
-> A simple web server made using CPP sockets.
+> A simple web server made using C++ sockets.
 
