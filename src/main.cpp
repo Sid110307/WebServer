@@ -56,3 +56,8 @@ void MainServer::launch()
 		std::cout << "========== Done =============" << std::endl;
 	}
 }
+
+inline int MainServer::getSocket()
+{
+	return newSocket;
+}

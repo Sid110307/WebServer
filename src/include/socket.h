@@ -8,14 +8,14 @@ class Socket
 {
 public:
 	Socket(int domain, int type, int protocol, int port, u_long ip);
-	int connect(int sockfd, struct sockaddr_in serverAddress);
+	int connect(int socketAddress, struct sockaddr_in serverAddress);
 	void testConnection(int testItem);
 
 	struct sockaddr_in getServerAddress();
 	int getSocket();
 private:
 	struct sockaddr_in serverAddress;
-	int sockfd;
+	int socketAddress;
 };
 
 class SocketBinder : public Socket
@@ -23,14 +23,14 @@ class SocketBinder : public Socket
 public:
 	SocketBinder(int domain, int type, int protocol, int port, u_long ip);
 private:
-	int connect(int sockfd, struct sockaddr_in serverAddress);
+	int connect(int socketAddress, struct sockaddr_in serverAddress);
 };
 
 class SocketConnector : public Socket
 {
 public:
 	SocketConnector(int domain, int type, int protocol, int port, u_long ip);
-	int connectSocket(int sockfd, struct sockaddr_in serverAddress);
+	int connectSocket(int socketAddress, struct sockaddr_in serverAddress);
 };
 
 class SocketListener : public SocketBinder

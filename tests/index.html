@@ -1,39 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Testing haha</title>
-  </head>
-  <body>
-    <h1>Cyka, blyat!</h1>
-    <marquee>
-        <p>Hello, world!</p>
-    </marquee>
-    <style>
-      body {
-        padding: 20px;
-      }
-      
-      h1 {
-        font-family: "Comic Sans MS", sans-serif;
-        color: #FFD55A;
-      }
-      
-      p {
-        font-family: "SignPainter", "Helvetica", sans-serif;
-        animation: lgbtq 5s infinite;
-      }
+	<head>
+		<meta charset="utf-8" />
+		<title>A test file</title>
+	</head>
 
-      @keyframes lgbtq {
-        0% { color: violet }
-        15% { color: indigo }
-        30% { color: blue }
-        40% { color: green }
-        65% { color: yellow }
-        80% { color: orange }
-        100% { color: red }
-      }
-    </style>
-  </body>
+	<body>
+		<h1>Some random text here</h1>
+		<marquee behavior="alternate" direction="right" scrollamount="20">
+			<p>Hello, world!</p>
+		</marquee>
+		<p class="text">Can you read me?</p>
+		<button class="btn">Click me!</button>
+
+		<style>
+			:root {
+				--animation-speed: 30s;
+			}
+
+			body {
+				padding: 20px;
+				color: transparent;
+				overflow: hidden;
+
+				background: linear-gradient(
+					-45deg,
+					red,
+					orange,
+					yellow,
+					green,
+					blue,
+					indigo,
+					violet
+				);
+				background-clip: text;
+				animation: rainbow var(--animation-speed) infinite;
+				background-size: 500% 500%;
+			}
+
+			h1 {
+				font-family: "Comic Sans MS", cursive, sans-serif;
+				text-align: center;
+				animation: rainbow var(--animation-speed) infinite;
+			}
+
+			p {
+				font-family: Impact, Fantasy, sans-serif;
+				animation: rainbow var(--animation-speed) infinite;
+				font-size: 2rem;
+			}
+
+			@keyframes rainbow {
+				0% {
+					background-position: 0% 0%;
+					color: black;
+				}
+
+				50% {
+					background-position: 100% 0%;
+					color: white;
+				}
+
+				100% {
+					background-position: 0% 0%;
+					color: black;
+				}
+			}
+
+			.btn {
+				display: block;
+				margin: 0 auto;
+				padding: 10px 20px;
+
+				background: white;
+				border: none;
+				border-radius: 5px;
+
+				font-size: 1.5rem;
+				font-family: "Comic Sans MS", cursive, sans-serif;
+
+				cursor: pointer;
+				box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+				transition: all 0.25s ease;
+			}
+
+			.btn:hover {
+				background: black;
+				color: white;
+				transform: scale(1.25);
+			}
+
+			.btn:active {
+				transform: scale(0.75);
+				color: black;
+				box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+				background-color: #33b864;
+			}
+
+			.text {
+				font-family: Impact, Fantasy, sans-serif;
+				font-size: 0.5rem;
+				text-align: center;
+			}
+		</style>
+		<script>
+			const text = document.querySelector(".text");
+			const btn = document.querySelector(".btn");
+
+			btn.addEventListener("click", () => {
+				const x = Math.floor(Math.random() * document.body.clientWidth);
+				const y = Math.floor(
+					Math.random() * document.body.clientHeight
+				);
+
+				text.style.position = "absolute";
+				text.style.left = x > document.body.clientWidth / 2 && `${x}px`;
+				text.style.right =
+					x < document.body.clientWidth / 2 && `${x}px`;
+
+				text.style.top = y > document.body.clientHeight / 2 && `${y}px`;
+				text.style.bottom =
+					y < document.body.clientHeight / 2 && `${y}px`;
+
+				text.innerHTML = "I'm here!";
+
+				btn.style.position = "absolute";
+				btn.style.left = `${x + Math.floor(Math.random() * 100)}px`;
+				btn.style.top = `${y + Math.floor(Math.random() * 100)}px`;
+
+				setTimeout(() => (text.innerHTML = "Can you read me?"), 5000);
+			});
+		</script>
+	</body>
 </html>
-

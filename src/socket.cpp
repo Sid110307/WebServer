@@ -6,8 +6,8 @@ Socket::Socket(int domain, int type, int protocol, int port, u_long ip)
 	serverAddress.sin_port = htons(port);
 	serverAddress.sin_addr.s_addr = htonl(ip);
 
-	sockfd = socket(domain, type, protocol);
-	testConnection(sockfd);
+	socketAddress = socket(domain, type, protocol);
+	testConnection(socketAddress);
 }
 
 void Socket::testConnection(int testItem)
@@ -26,7 +26,7 @@ inline struct sockaddr_in Socket::getServerAddress()
 
 inline int Socket::getSocket()
 {
-	return sockfd;
+	return socketAddress;
 }
 
 SocketBinder::SocketBinder(int domain, int type, int protocol, int port, u_long ip) : Socket(domain, type, protocol, port, ip)
@@ -35,9 +35,9 @@ SocketBinder::SocketBinder(int domain, int type, int protocol, int port, u_long 
 	testConnection(connection);
 }
 
-int SocketBinder::connect(int sockfd, struct sockaddr_in serverAddress)
+int SocketBinder::connect(int socketAddress, struct sockaddr_in serverAddress)
 {
-	return bind(sockfd, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+	return bind(socketAddress, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
 }
 
 SocketConnector::SocketConnector(int domain, int type, int protocol, int port, u_long ip) : Socket(domain, type, protocol, port, ip)
@@ -46,9 +46,9 @@ SocketConnector::SocketConnector(int domain, int type, int protocol, int port, u
 	testConnection(connection);
 }
 
-int SocketConnector::connectSocket(int sockfd, struct sockaddr_in serverAddress)
+int SocketConnector::connectSocket(int socketAddress, struct sockaddr_in serverAddress)
 {
-	return ::connect(sockfd, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+	return ::connect(socketAddress, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
 }
 
 SocketListener::SocketListener(int domain, int type, int protocol, int port, u_long ip, int backlog) : SocketBinder(domain, type, protocol, port, ip)

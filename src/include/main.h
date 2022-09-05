@@ -12,6 +12,7 @@ public:
 	void launch();
 
 	const char* filePath;
+	int getSocket();
 private:
 	void acceptRequest();
 	void handleResponse();
