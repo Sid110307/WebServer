@@ -8,7 +8,9 @@
 class MainServer : public Server
 {
 public:
-	MainServer(int portName);
+	MainServer(int portName) : Server(AF_INET, SOCK_STREAM, 0, portName, INADDR_ANY, 10) {}
+	~MainServer();
+
 	void launch();
 
 	const char* filePath;

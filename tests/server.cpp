@@ -1,33 +1,23 @@
-#include <signal.h>
 #include "../src/include/main.h"
-
-MainServer server;
-
-static void signalHandler(int signalCode)
-{
-	close(server.getSocket());
-	std::cout << "========== Stopped ==========" << std::endl;
-
-	exit(signalCode);
-};
 
 int main(int argc, const char** argv)
 {
-	if (argc < 2)
+	if (argc < 3)
 	{
-		std::cerr << "Usage: " << argv[0] << " <port>" << std::endl;
+		std::cerr << "Usage: " << argv[0] << " <file> <port>" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 
-	server = MainServer(atoi(argv[1]));
+	std::ifstream file(argv[1]);
+	if (!file.is_open())
+	{
+		perror("File not found");
+		exit(EXIT_FAILURE);
+	}
 
-	struct sigaction sigIntHandler;
-	sigIntHandler.sa_handler = signalHandler;
+	file.close();
+	MainServer server(atoi(argv[2]));
 
-	sigemptyset(&sigIntHandler.sa_mask);
-	sigIntHandler.sa_flags = 0;
-	sigaction(SIGINT, &sigIntHandler, NULL);
-
-	server.filePath = "./tests/index.html";
+	server.filePath = argv[1];
 	server.launch();
 }

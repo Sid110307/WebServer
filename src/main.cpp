@@ -1,6 +1,10 @@
 #include "./include/main.h"
 
-MainServer::MainServer(int portName) : Server(AF_INET, SOCK_STREAM, 0, portName, INADDR_ANY, 10) {}
+MainServer::~MainServer()
+{
+	close(newSocket);
+	std::cout << "========== Stopped ==========" << std::endl;
+}
 
 void MainServer::acceptRequest()
 {
@@ -44,7 +48,8 @@ void MainServer::respondData()
 
 void MainServer::launch()
 {
-	std::cout << "Starting on \033[1;4mlocalhost:" << ntohs(getSocketAddress()->getServerAddress().sin_port) << "\033[0m... Press Ctrl+C to stop." << std::endl;
+	int port = ntohs(getSocketAddress()->getServerAddress().sin_port);
+	std::cout << "Starting on \033]8;;http://localhost:" << port << "\033\\localhost:" << port << "\033]8;;\033\\" << std::endl;
 
 	while (true)
 	{
